@@ -9,13 +9,17 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-	    background-image: url('bananas.webp');
-	    background-size: cover;
-	    background-position: center;
-	    background-repeat: no-repeat;”
+            background-image: url('bananas.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         input {
             margin: 5px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -27,42 +31,60 @@
     <button onclick="addBananas()">Add</button>
     <br>
 
-    <input type="number" id="removeBananas" placeholder="Remove bananas" min="0">
+    <input type="number" id="removeBananas" placeholder="Remove bananas" min="1">
     <button onclick="removeBananas()">Remove</button>
     <br>
 
     <button onclick="reset()">Reset</button>
-    
+
+    <p id="error" class="error"></p>
+
     <script>
       let bananas = 0;
 
       function reset() {
-	  bananas = 0;
-	  updateBananaCount();
+        bananas = 0;
+        updateBananaCount();
+        clearError();
       }
 
       function updateBananaCount() {
           document.getElementById('bananaCount').textContent = bananas;
       }
-      
-      function addBananas() {
-          let addValue = document.getElementById('addBananas').value;
-          bananas -= -addValue;
-          updateBananaCount();
-          document.getElementById('addBananas').value = ''; 
+
+      function showError(message) {
+          document.getElementById('error').textContent = message;
       }
-      
-      
+
+      function clearError() {
+          document.getElementById('error').textContent = '';
+      }
+
+      function addBananas() {
+          let addValue = parseInt(document.getElementById('addBananas').value);
+
+          if (isNaN(addValue) || addValue <= 0) {
+              showError('Please enter a valid positive number to add.');
+          } else {
+              bananas += addValue;
+              updateBananaCount();
+              document.getElementById('addBananas').value = '';
+              clearError();
+          }
+      }
+
       function removeBananas() {
           let removeValue = parseInt(document.getElementById('removeBananas').value);
-          if (!isNaN(removeValue) && removeValue > 0) {
-	      if (removeValue >= bananas) {
-		  alert("Not enough bananas in the storage");
-	      } else {
-		  bananas -= removeValue;
-		  updateBananaCount();
-	      }
-	      document.getElementById('removeBananas').value = ''; 
+
+          if (isNaN(removeValue) || removeValue <= 0) {
+              showError('Please enter a valid positive number to remove.');
+          } else if (removeValue > bananas) {
+              showError('Not enough bananas in storage to remove.');
+          } else {
+              bananas -= removeValue;
+              updateBananaCount();
+              document.getElementById('removeBananas').value = '';
+              clearError();
           }
       }
     </script>
