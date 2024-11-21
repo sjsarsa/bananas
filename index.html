@@ -31,7 +31,7 @@
     <button onclick="addBananas()">Add</button>
     <br>
 
-    <input type="number" id="removeBananas" placeholder="Remove bananas" min="1">
+    <input type="number" id="removeBananas" placeholder="Remove bananas" min="0">
     <button onclick="removeBananas()">Remove</button>
     <br>
 
@@ -63,7 +63,7 @@
       function addBananas() {
           let addValue = parseInt(document.getElementById('addBananas').value);
 
-          if (isNaN(addValue) || addValue <= 0) {
+          if (isNaN(addValue) || addValue < 0) {
               showError('Please enter a valid positive number to add.');
           } else {
               bananas += addValue;
@@ -74,14 +74,15 @@
       }
 
       function removeBananas() {
-          let removeValue = parseInt(document.getElementById('removeBananas').value);
+          let removeValue = document.getElementById('removeBananas').value;
+          let removeNumber = parseInt(document.getElementById('removeBananas').value);
 
-          if (isNaN(removeValue) || removeValue <= 0) {
+          if (isNaN(removeNumber) || removeNumber < 0) {
               showError('Please enter a valid positive number to remove.');
           } else if (removeValue > bananas) {
               showError('Not enough bananas in storage to remove.');
           } else {
-              bananas -= removeValue;
+              bananas -= removeNumber;
               updateBananaCount();
               document.getElementById('removeBananas').value = '';
               clearError();
