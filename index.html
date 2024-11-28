@@ -61,12 +61,13 @@
       }
 
       function addBananas() {
-          let addValue = parseInt(document.getElementById('addBananas').value);
+          let addValue = document.getElementById('removeBananas').value;
+          let addNumber = parseInt(document.getElementById('removeBananas').value);
 
-          if (isNaN(addValue) || addValue < 0) {
+          if (isNaN(addNumber) || addValue < 0) {
               showError('Please enter a valid positive number to add.');
           } else {
-              bananas += addValue;
+              bananas += addNumber;
               updateBananaCount();
               document.getElementById('addBananas').value = '';
               clearError();
@@ -77,7 +78,7 @@
           let removeValue = document.getElementById('removeBananas').value;
           let removeNumber = parseInt(document.getElementById('removeBananas').value);
 
-          if (isNaN(removeNumber) || removeNumber < 0) {
+          if (isNaN(removeNumber) || removeValue < 0) {
               showError('Please enter a valid positive number to remove.');
           } else if (removeValue > bananas) {
               showError('Not enough bananas in storage to remove.');
