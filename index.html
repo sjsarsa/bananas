@@ -102,7 +102,7 @@
         let addValue = document.getElementById("addBananas").value;
         let addNumber = parseInt(document.getElementById("addBananas").value);
 
-        if (isNaN(addNumber) || addNumber < 0) {
+        if (isNaN(addNumber) || addValue.trim()[0] === "-") {
           showError("Please enter a valid positive number to add.");
         } else {
           bananas += addNumber;
